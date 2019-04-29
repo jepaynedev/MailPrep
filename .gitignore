@@ -37,3 +37,7 @@ venv/
 
 # Qt Creator
 *.user
+*.ui
+
+# Misc
+*.bat
