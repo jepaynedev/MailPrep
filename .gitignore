@@ -34,3 +34,6 @@ docs/_build/
 
 # Virtual Environment
 venv/
+
+# Qt Creator
+*.user
