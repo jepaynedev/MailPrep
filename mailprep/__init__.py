@@ -22,6 +22,7 @@ def main():
 
     # Init and show interface
     app = QApplication(sys.argv)
+    app.setStyle('fusion')
     window = MainWindow()
     window.show()
 
