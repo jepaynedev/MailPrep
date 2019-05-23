@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'P:\Projects\MailPrep\ui\mainwindow.ui',
 # licensing of 'P:\Projects\MailPrep\ui\mainwindow.ui' applies.
 #
-# Created: Mon May 20 01:01:30 2019
+# Created: Wed May 22 20:48:35 2019
 #      by: pyside2-uic  running on PySide2 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -70,7 +70,7 @@ class Ui_MainWindow_MailPrep(object):
         self.scrollArea_files.setWidgetResizable(True)
         self.scrollArea_files.setObjectName("scrollArea_files")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 223, 317))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 22, 16))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.scrollArea_files.setWidget(self.scrollAreaWidgetContents)
         self.horizontalLayout_2.addWidget(self.scrollArea_files)
@@ -139,6 +139,7 @@ class Ui_MainWindow_MailPrep(object):
         QtCore.QObject.connect(self.lineEdit_title, QtCore.SIGNAL("returnPressed()"), self.lineEdit_department.setFocus)
         QtCore.QObject.connect(self.pushButton_browseCustomCampus, QtCore.SIGNAL("clicked()"), self.actionBrowseCustomCampus.trigger)
         QtCore.QObject.connect(self.pushButton_createOpen, QtCore.SIGNAL("clicked()"), self.actionOpenJob.trigger)
+        QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL("triggered()"), MainWindow_MailPrep.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow_MailPrep)
 
     def retranslateUi(self, MainWindow_MailPrep):
