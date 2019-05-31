@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'P:\Projects\MailPrep\ui\mainwindow.ui',
 # licensing of 'P:\Projects\MailPrep\ui\mainwindow.ui' applies.
 #
-# Created: Wed May 22 22:55:18 2019
+# Created: Thu May 30 21:20:13 2019
 #      by: pyside2-uic  running on PySide2 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -58,6 +58,7 @@ class Ui_MainWindow_MailPrep(object):
         self.formLayout_landing.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.lineEdit_customer)
         self.verticalLayout.addLayout(self.formLayout_landing)
         self.pushButton_createOpen = QtWidgets.QPushButton(self.pageLanding)
+        self.pushButton_createOpen.setEnabled(False)
         self.pushButton_createOpen.setBaseSize(QtCore.QSize(0, 0))
         self.pushButton_createOpen.setObjectName("pushButton_createOpen")
         self.verticalLayout.addWidget(self.pushButton_createOpen)
@@ -76,7 +77,7 @@ class Ui_MainWindow_MailPrep(object):
         self.scrollArea_files.setWidgetResizable(True)
         self.scrollArea_files.setObjectName("scrollArea_files")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 326, 288))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 312, 20))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
