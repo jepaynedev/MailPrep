@@ -6,7 +6,6 @@ from os.path import splitext
 
 from setuptools import find_packages
 from setuptools import setup
-from setuptools.command.test import test as TestCommand
 
 requires = [
     'PySide2',
