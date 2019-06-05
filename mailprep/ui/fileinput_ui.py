@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'P:\Projects\MailPrep\ui\fileinput.ui',
-# licensing of 'P:\Projects\MailPrep\ui\fileinput.ui' applies.
-#
-# Created: Wed May 22 22:55:18 2019
-#      by: pyside2-uic  running on PySide2 5.12.2
-#
 # WARNING! All changes made in this file will be lost!
 
 from PySide2 import QtCore, QtGui, QtWidgets
