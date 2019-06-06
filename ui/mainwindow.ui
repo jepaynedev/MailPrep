@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow_MailPrep</class>
+ <widget class="QMainWindow" name="MainWindow_MailPrep">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>659</width>
+    <height>397</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>659</width>
+    <height>397</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Mail Prep</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="pageLanding">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QFormLayout" name="formLayout_landing">
+          <property name="labelAlignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_jobNumber">
+            <property name="text">
+             <string>Job Number</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_jobNumber"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_title">
+            <property name="text">
+             <string>Title</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_title"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_department">
+            <property name="text">
+             <string>Department</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEdit_department"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_customer">
+            <property name="text">
+             <string>Customer</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="lineEdit_customer"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_createOpen">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Create / Open</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pageJob">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_fileInputColumn">
+          <item>
+           <widget class="QPushButton" name="pushButton_addFiles">
+            <property name="text">
+             <string>Add Files</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QScrollArea" name="scrollArea_files">
+            <property name="minimumSize">
+             <size>
+              <width>328</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>312</width>
+               <height>20</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_files"/>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QFormLayout" name="formLayout_jobControls">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_convertUpper">
+            <property name="text">
+             <string>Convert to Upper Case</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="checkBox_convertUpper">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_markCustomCampus">
+            <property name="text">
+             <string>Mark Custom Campus</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="checkBox_markCustomCampus">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_customCampusFile">
+            <property name="text">
+             <string>Custom Campus File</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_customCampusFile">
+            <item>
+             <widget class="QLineEdit" name="lineEdit_customCampusFile"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_browseCustomCampus">
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>659</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_MailPrep">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionClose"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <addaction name="menu_MailPrep"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionExit">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+  </action>
+  <action name="actionBrowseCustomCampus">
+   <property name="text">
+    <string>BrowseCustomCampus</string>
+   </property>
+   <property name="toolTip">
+    <string>Browse Custom Campus</string>
+   </property>
+  </action>
+  <action name="actionOpenJob">
+   <property name="text">
+    <string>OpenJob</string>
+   </property>
+   <property name="toolTip">
+    <string>Create / Open Job</string>
+   </property>
+  </action>
+  <action name="actionCloseJob">
+   <property name="text">
+    <string>CloseJob</string>
+   </property>
+   <property name="toolTip">
+    <string>Close Job</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Close</string>
+   </property>
+  </action>
+  <action name="actionAddFiles">
+   <property name="text">
+    <string>AddFiles</string>
+   </property>
+   <property name="toolTip">
+    <string>Add Files</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>lineEdit_jobNumber</sender>
+   <signal>returnPressed()</signal>
+   <receiver>lineEdit_title</receiver>
+   <slot>setFocus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>262</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>262</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_customer</sender>
+   <signal>returnPressed()</signal>
+   <receiver>pushButton_createOpen</receiver>
+   <slot>setFocus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>262</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>231</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_department</sender>
+   <signal>returnPressed()</signal>
+   <receiver>lineEdit_customer</receiver>
+   <slot>setFocus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>262</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>262</x>
+     <y>133</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_title</sender>
+   <signal>returnPressed()</signal>
+   <receiver>lineEdit_department</receiver>
+   <slot>setFocus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>262</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>262</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_browseCustomCampus</sender>
+   <signal>clicked()</signal>
+   <receiver>actionBrowseCustomCampus</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>521</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_createOpen</sender>
+   <signal>clicked()</signal>
+   <receiver>actionOpenJob</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>346</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow_MailPrep</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>290</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_addFiles</sender>
+   <signal>clicked()</signal>
+   <receiver>actionAddFiles</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
