@@ -1,0 +1,2 @@
+include pyside2_uic_runner.py
+include ui/*

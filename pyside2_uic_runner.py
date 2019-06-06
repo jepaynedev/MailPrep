@@ -7,9 +7,9 @@ import subprocess
 def run_pyside2_uic(input_dir, output_dir):
     # Validate arguments
     if not os.path.isdir(input_dir):
-        raise NotADirectoryError(f'{input_dir} is not a valid directory')
+        raise NotADirectoryError(f'{os.path.abspath(input_dir)} is not a valid directory')
     if not os.path.isdir(output_dir):
-        raise NotADirectoryError(f'{output_dir} is not a valid directory')
+        raise NotADirectoryError(f'{os.path.abspath(output_dir)} is not a valid directory')
 
     for path in glob.glob(os.path.join(input_dir, '*.ui')):
         result = subprocess.run(['pyside2-uic', path], capture_output=True)
