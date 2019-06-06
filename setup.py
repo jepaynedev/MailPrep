@@ -1,12 +1,10 @@
 #! /usr/bin/env python
 # -*- encoding: utf-8 -*-
-from glob import glob
-from os.path import basename
-from os.path import splitext
+import glob
+import os.path
 
-from setuptools import find_packages
-from setuptools import setup
-from setuptools.command.install import install as InstallCommand
+import setuptools
+import setuptools.command.install
 
 requires = [
     'PySide2',
@@ -20,18 +18,13 @@ dev_extras = [
 ]
 
 
-class CustomInstallCommand(InstallCommand):
+class Pyside2UICRunnerOnInstall(setuptools.command.install.install):
     def run(self):
-        import subprocess
-        for path in glob('ui/*.ui'):
-            result = subprocess.run(['pyside2-uic', path], capture_output=True)
-            output_path = f'src/mailprep/ui/{splitext(basename(path))[0]}_ui.py'
-            with open(output_path, 'w') as output_file:
-                data = result.stdout.decode()
-                output_file.write(data)
-        InstallCommand.run(self)
+        from pyside2_uic_runner import run_pyside2_uic
+        run_pyside2_uic('ui/', 'src/mailprep/ui/')
+        setuptools.command.install.install.run(self)
 
-setup(
+setuptools.setup(
     name='mailprep',
     version='0.0',
     description='List preparation for UW Extension Bulk Mail Center',
@@ -39,9 +32,12 @@ setup(
     author_email='contact@jepaynedev.com',
     license='MIT',
     python_requires='>=3.4',
-    packages=find_packages('src'),
+    packages=setuptools.find_packages('src'),
     package_dir={'': 'src'},
-    py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
+    py_modules=[
+        os.path.splitext(os.path.basename(path))[0]
+        for path in glob.glob('src/*.py')
+    ],
     include_package_data=True,
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -60,7 +56,7 @@ setup(
         'dev': dev_extras,
     },
     cmdclass={
-        'install': CustomInstallCommand,
+        'install': Pyside2UICRunnerOnInstall,
     },
     entry_points={
         'console_scripts': [
