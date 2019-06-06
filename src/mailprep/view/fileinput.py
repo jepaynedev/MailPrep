@@ -1,20 +1,22 @@
+"""File input widget view with view-specific logic"""
 import logging
 import os.path
 from PySide2.QtWidgets import QWidget
-from mailprep.ui.fileinput_ui import Ui_FileInput
+from mailprep.ui.fileinput_ui import Ui_FileInput  # pylint: disable=no-name-in-module,import-error
 
 log = logging.getLogger(__name__)
 
 class FileInput(QWidget):
-    def __init__(self, filePath):
-        super(FileInput, self).__init__()
-        log.debug(f'FileInput.__init__({filePath})')
+    """File input widget view for data entry for a single file"""
 
-        self.filePath = filePath
-        self.fileName = os.path.basename(self.filePath)
+    def __init__(self, file_path):
+        super(FileInput, self).__init__()
+        log.debug('FileInput.__init__(%s)', file_path)
+
+        self.file_path = file_path
+        self.file_name = os.path.basename(self.file_path)
 
         self.ui = Ui_FileInput()
         self.ui.setupUi(self)
 
-        self.ui.lineEdit_fileName.setText(self.fileName)
-
+        self.ui.lineEdit_fileName.setText(self.file_name)

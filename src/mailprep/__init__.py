@@ -1,3 +1,5 @@
+"""User inputs data for a bulk mail job and processing is automated"""
+
 import sys
 import logging
 from PySide2.QtWidgets import QApplication
@@ -18,6 +20,7 @@ def setup_logger(level):
 
 
 def main():
+    """Entry point for running the interface from the command line"""
     setup_logger(logging.DEBUG)
 
     # Init and show interface

@@ -1,4 +1,7 @@
-class Job:
+"""Contains data container class for a bulk mail job"""
+
+class Job:  # pylint: disable=too-few-public-methods,too-many-instance-attributes
+    """Container for data pertaining to a bulk mail job"""
 
     def __init__(self, job_number, title, department, customer):
         self.job_number = job_number
