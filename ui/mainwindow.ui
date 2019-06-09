@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>659</width>
-    <height>397</height>
+    <width>966</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -27,83 +27,7 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="pageLanding">
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <layout class="QFormLayout" name="formLayout_landing">
-          <property name="labelAlignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_jobNumber">
-            <property name="text">
-             <string>Job Number</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_jobNumber"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_title">
-            <property name="text">
-             <string>Title</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_title"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_department">
-            <property name="text">
-             <string>Department</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit_department"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_customer">
-            <property name="text">
-             <string>Customer</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lineEdit_customer"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_createOpen">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="baseSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Create / Open</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout"/>
       </widget>
       <widget class="QWidget" name="pageJob">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -132,8 +56,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>312</width>
-               <height>20</height>
+               <width>458</width>
+               <height>542</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -210,7 +134,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>659</width>
+     <width>966</width>
      <height>20</height>
     </rect>
    </property>
@@ -218,6 +142,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNewJob"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -273,73 +198,20 @@
     <string>Add Files</string>
    </property>
   </action>
+  <action name="actionNewJob">
+   <property name="text">
+    <string>&amp;New Job</string>
+   </property>
+   <property name="toolTip">
+    <string>New Job</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>lineEdit_jobNumber</sender>
-   <signal>returnPressed()</signal>
-   <receiver>lineEdit_title</receiver>
-   <slot>setFocus()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>262</x>
-     <y>49</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>262</x>
-     <y>77</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEdit_customer</sender>
-   <signal>returnPressed()</signal>
-   <receiver>pushButton_createOpen</receiver>
-   <slot>setFocus()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>262</x>
-     <y>133</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>231</x>
-     <y>172</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEdit_department</sender>
-   <signal>returnPressed()</signal>
-   <receiver>lineEdit_customer</receiver>
-   <slot>setFocus()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>262</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>262</x>
-     <y>133</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEdit_title</sender>
-   <signal>returnPressed()</signal>
-   <receiver>lineEdit_department</receiver>
-   <slot>setFocus()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>262</x>
-     <y>77</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>262</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>pushButton_browseCustomCampus</sender>
    <signal>clicked()</signal>
@@ -349,22 +221,6 @@
     <hint type="sourcelabel">
      <x>521</x>
      <y>90</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_createOpen</sender>
-   <signal>clicked()</signal>
-   <receiver>actionOpenJob</receiver>
-   <slot>trigger()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>290</x>
-     <y>346</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>

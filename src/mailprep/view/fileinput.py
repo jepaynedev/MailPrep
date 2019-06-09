@@ -6,6 +6,7 @@ from mailprep.ui.fileinput_ui import Ui_FileInput  # pylint: disable=no-name-in-
 
 log = logging.getLogger(__name__)
 
+
 class FileInput(QWidget):
     """File input widget view for data entry for a single file"""
 

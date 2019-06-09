@@ -4,6 +4,7 @@ import sys
 import logging
 from PySide2.QtWidgets import QApplication
 from mailprep.view.mainwindow import MainWindow
+from mailprep.controller.mainwindow_controller import MainWindowController
 
 def setup_logger(level):
     """Define logger at root of main module so all submodules inherit"""
@@ -26,7 +27,8 @@ def main():
     # Init and show interface
     app = QApplication(sys.argv)
     app.setStyle('fusion')
-    window = MainWindow()
-    window.show()
+    main_controller = MainWindowController()
+    main_window = MainWindow(main_controller)
+    main_window.show()
 
     sys.exit(app.exec_())
