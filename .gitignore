@@ -43,3 +43,6 @@ venv/
 
 # Qt .ui compiled Python source code
 *_ui.py
+
+# Mypy cache
+.mypy_cache/
