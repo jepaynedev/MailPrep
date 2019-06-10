@@ -15,12 +15,4 @@ class SignalCheck:
 
 
 class TestMainWindowController(unittest.TestCase):
-
-    def test_new_job_show_signal_emitted(self):
-        signal_check = SignalCheck()
-        mainwindow_controller = MainWindowController()
-        mainwindow_controller.new_job_signal.connect(signal_check.slot)
-
-        mainwindow_controller.new_job()
-
-        self.assertTrue(signal_check.signal_emitted)
+    pass

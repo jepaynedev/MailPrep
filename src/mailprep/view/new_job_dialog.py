@@ -15,4 +15,3 @@ class NewJobDialog(QDialog):
 
         self.ui = Ui_NewJobDialog()
         self.ui.setupUi(self)
-        from PySide2 import QtCore
