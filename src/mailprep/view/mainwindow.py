@@ -19,7 +19,10 @@ class MainWindow(QMainWindow):
         log.debug('Loading MainWindow')
         self.ui = Ui_MainWindow_MailPrep()
         self.ui.setupUi(self)
+
+        # Set default window state
         self.setWindowState(Qt.WindowMaximized)
+        self.ui.dockWidget_output.setVisible(False)
 
         self.new_job_dialog = NewJobDialog()
 

@@ -94,7 +94,14 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionOutputToggleVisibility"/>
+   </widget>
    <addaction name="menu_MailPrep"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget_jobProperties">
@@ -147,6 +154,39 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionNewJob"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_output">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>Output</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPlainTextEdit" name="plainTextEdit_output"/>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <action name="actionExit">
    <property name="text">
@@ -207,6 +247,17 @@
     <string>Ctrl+N</string>
    </property>
   </action>
+  <action name="actionOutputToggleVisibility">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Output</string>
+   </property>
+   <property name="toolTip">
+    <string>Output Toggle Visibility</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -223,6 +274,38 @@
     <hint type="destinationlabel">
      <x>290</x>
      <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOutputToggleVisibility</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dockWidget_output</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>482</x>
+     <y>554</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>482</x>
+     <y>554</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dockWidget_output</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionOutputToggleVisibility</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>482</x>
+     <y>554</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
