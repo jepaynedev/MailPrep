@@ -25,7 +25,7 @@ class MainWindow(QMainWindow):
 
         # Create list to hold file input widgets
         self.file_input_widgets = []
-        self.ui.verticalLayout_files.setAlignment(Qt.AlignTop)
+        # self.ui.verticalLayout_files.setAlignment(Qt.AlignTop)
 
         # Register signals
         self.ui.actionNewJob.triggered.connect(self.on_new_job)
