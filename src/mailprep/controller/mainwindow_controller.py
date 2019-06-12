@@ -1,6 +1,6 @@
 """Controls logic for the main window"""
 import logging
-from PySide2.QtCore import QObject
+from PySide2.QtCore import QObject, QSettings
 from PySide2.QtWidgets import QFileSystemModel
 
 log = logging.getLogger(__name__)
@@ -28,3 +28,4 @@ class MainWindowController(QObject):
     def __init__(self):
         super(MainWindowController, self).__init__()
         self.file_system_model = JobFileSystemModel()
+        self.settings = QSettings()

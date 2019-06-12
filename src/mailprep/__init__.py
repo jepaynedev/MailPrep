@@ -5,6 +5,7 @@ import logging
 from PySide2.QtWidgets import QApplication
 from mailprep.view.mainwindow import MainWindow
 from mailprep.controller.mainwindow_controller import MainWindowController
+from mailprep.controller.settings_manager import SettingsManager
 
 def setup_logger(level):
     """Define logger at root of main module so all submodules inherit"""
@@ -23,6 +24,11 @@ def setup_logger(level):
 def main():
     """Entry point for running the interface from the command line"""
     setup_logger(logging.DEBUG)
+    SettingsManager.set_application_values(
+        application="MailPrep",
+        organization="UW-Madison Postal Mail",
+        domain="postalmail.wisc.edu"
+    )
 
     # Init and show interface
     app = QApplication(sys.argv)
