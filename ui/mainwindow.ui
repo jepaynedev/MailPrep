@@ -138,7 +138,11 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QTreeView" name="treeView_jobProperties"/>
+      <widget class="QTreeView" name="treeView_jobProperties">
+       <property name="expandsOnDoubleClick">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
