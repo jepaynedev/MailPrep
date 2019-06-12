@@ -1,7 +1,8 @@
 """Main window view with view-specific logic"""
 import logging
-from PySide2.QtCore import Qt, Slot
-from PySide2.QtWidgets import QMainWindow, QFileDialog
+from PySide2.QtCore import Qt, Slot, QSettings
+from PySide2.QtWidgets import QMainWindow, QFileDialog, QApplication
+from PySide2.QtGui import QStandardItemModel, QStandardItem
 from mailprep.ui.mainwindow_ui import Ui_MainWindow_MailPrep  # pylint: disable=no-name-in-module,import-error
 from mailprep.view.new_job_dialog import NewJobDialog
 
@@ -14,20 +15,29 @@ class MainWindow(QMainWindow):
     def __init__(self, controller):
         super(MainWindow, self).__init__()
         self.ctrl = controller
+        # Has to be called ASAP to save and restore application state
+        self.state_settings = QSettings(
+            QSettings.NativeFormat,
+            QSettings.UserScope,
+            QApplication.organizationName(),
+            QApplication.applicationName()
+        )
 
         log.debug('Loading MainWindow')
         self.ui = Ui_MainWindow_MailPrep()
         self.ui.setupUi(self)
 
         # Set default window state
-        self.setWindowState(Qt.WindowMaximized)
-        self.ui.dockWidget_output.setVisible(False)
+        if not self.restore_geometry():
+            self.setWindowState(Qt.WindowMaximized)
+        if not self.restore_state():
+            self.ui.dockWidget_output.setVisible(False)
+            self.splitDockWidget(
+                self.ui.dockWidget__fileList,
+                self.ui.dockWidget_jobProperties,
+                Qt.Vertical
+            )
         self.ui.treeView_fileList.setModel(self.ctrl.file_system_model)
-        self.splitDockWidget(
-            self.ui.dockWidget__fileList,
-            self.ui.dockWidget_jobProperties,
-            Qt.Vertical
-        )
 
         self.new_job_dialog = NewJobDialog()
 
@@ -43,6 +53,29 @@ class MainWindow(QMainWindow):
         self.ui.actionOpenJob.triggered.connect(self.on_open_job)
         self.ui.actionAddFiles.triggered.connect(self.on_add_files)
         # pylint: enable = no-member, fixme
+
+        model = QStandardItemModel()
+        model.setHorizontalHeaderLabels(['Property', 'Value'])
+        parent = model.invisibleRootItem();
+        customer_info = QStandardItem('Customer Information')
+        customer_info.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+        # odd_parent = QStandardItem('Odd')
+        # odd_parent.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+        parent.appendRow(customer_info)
+        # parent.appendRow(odd_parent)
+        properties = {
+            'Customer': None,
+            'Department': None,
+        }
+        for key, value in properties.items():
+            key_item = QStandardItem(key)
+            key_item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+            value_item = QStandardItem(None)
+            customer_info.appendRow([key_item, value_item])
+        self.ui.treeView_jobProperties.setModel(model)
+        self.ui.treeView_jobProperties.expandAll()
+        self.ui.treeView_jobProperties.setFirstColumnSpanned(0, model.indexFromItem(parent), True)
+
 
     @Slot()
     def set_file_list_view(self, path):
@@ -69,3 +102,23 @@ class MainWindow(QMainWindow):
         (add_paths, _) = QFileDialog.getOpenFileNames()
         log.debug('add_paths: %s', add_paths)
         # TODO: Add code to add files and remove pylint disable when finished  # pylint: disable = fixme
+
+    def closeEvent(self, event):
+        """Overload for event handler on main window closing (i.e. application closing)"""
+        self.state_settings.setValue('ApplicationState/geometry', self.saveGeometry())
+        self.state_settings.setValue('ApplicationState/windowState', self.saveState())
+        super(MainWindow, self).closeEvent(event)
+
+    def restore_geometry(self):
+        """Restores saved geometry state if it was saved"""
+        if self.state_settings.contains('ApplicationState/geometry'):
+            self.restoreGeometry(self.state_settings.value("ApplicationState/geometry"))
+            return True
+        return False
+
+    def restore_state(self):
+        """Restores saved application state if it was saved"""
+        if self.state_settings.contains('ApplicationState/windowState'):
+            self.restoreState(self.state_settings.value("ApplicationState/windowState"))
+            return True
+        return False
