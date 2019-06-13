@@ -5,6 +5,7 @@ from PySide2.QtWidgets import QMainWindow, QFileDialog, QApplication
 from PySide2.QtGui import QStandardItemModel, QStandardItem
 from mailprep.ui.mainwindow_ui import Ui_MainWindow_MailPrep  # pylint: disable=no-name-in-module,import-error
 from mailprep.view.new_job_dialog import NewJobDialog
+from mailprep.model.property_model import PropertyModel
 
 log = logging.getLogger(__name__)
 
@@ -54,27 +55,14 @@ class MainWindow(QMainWindow):
         self.ui.actionAddFiles.triggered.connect(self.on_add_files)
         # pylint: enable = no-member, fixme
 
-        model = QStandardItemModel()
-        model.setHorizontalHeaderLabels(['Property', 'Value'])
-        parent = model.invisibleRootItem();
-        customer_info = QStandardItem('Customer Information')
-        customer_info.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-        # odd_parent = QStandardItem('Odd')
-        # odd_parent.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-        parent.appendRow(customer_info)
-        # parent.appendRow(odd_parent)
-        properties = {
-            'Customer': None,
-            'Department': None,
-        }
-        for key, value in properties.items():
-            key_item = QStandardItem(key)
-            key_item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-            value_item = QStandardItem(None)
-            customer_info.appendRow([key_item, value_item])
-        self.ui.treeView_jobProperties.setModel(model)
-        self.ui.treeView_jobProperties.expandAll()
-        self.ui.treeView_jobProperties.setFirstColumnSpanned(0, model.indexFromItem(parent), True)
+        job_properties = PropertyModel()
+        job_properties.add_property('Customer Information', 'Customer', None)
+        job_properties.add_property('Customer Information', 'Department', None)
+        job_properties.add_property('Merge Settings', 'Use Custom Campus', None)
+        job_properties.add_property('Merge Settings', 'Custom Campus Path', None)
+        self.ui.treeView_jobProperties.setModel(job_properties)
+        self.ui.treeView_jobProperties.initialize()
+        self.ui.treeView_jobProperties.setColumnWidth(0, 200)
 
 
     @Slot()

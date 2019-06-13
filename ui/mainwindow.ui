@@ -138,9 +138,15 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QTreeView" name="treeView_jobProperties">
+      <widget class="PropertyEditor" name="treeView_jobProperties">
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="expandsOnDoubleClick">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -236,12 +242,6 @@
          <height>0</height>
         </size>
        </property>
-       <property name="baseSize">
-        <size>
-         <width>400</width>
-         <height>0</height>
-        </size>
-       </property>
       </widget>
      </item>
     </layout>
@@ -318,6 +318,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PropertyEditor</class>
+   <extends>QTreeView</extends>
+   <header>mailprep/view/property_editor.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
