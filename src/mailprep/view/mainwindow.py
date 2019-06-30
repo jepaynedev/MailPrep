@@ -6,6 +6,8 @@ from PySide2.QtGui import QStandardItemModel, QStandardItem
 from mailprep.ui.mainwindow_ui import Ui_MainWindow_MailPrep  # pylint: disable=no-name-in-module,import-error
 from mailprep.view.new_job_dialog import NewJobDialog
 from mailprep.model.property_model import PropertyModel
+from mailprep.controller.logging_decorators import log_call
+
 
 log = logging.getLogger(__name__)
 
@@ -84,9 +86,9 @@ class MainWindow(QMainWindow):
         self.ui.actionClose.setEnabled(True)
 
     @Slot()
+    @log_call(log)
     def on_add_files(self):  # pylint: disable = no-self-use
         """View updates trigged adding files to a job"""
-        log.debug('addFiles')
         (add_paths, _) = QFileDialog.getOpenFileNames()
         log.debug('add_paths: %s', add_paths)
         # TODO: Add code to add files and remove pylint disable when finished  # pylint: disable = fixme

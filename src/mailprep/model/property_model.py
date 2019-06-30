@@ -2,6 +2,8 @@ import logging
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QStandardItemModel, QStandardItem
 from PySide2.QtWidgets import QStyledItemDelegate, QComboBox
+from mailprep.controller.logging_decorators import log_call
+
 
 log = logging.getLogger(__name__)
 
@@ -32,6 +34,7 @@ class PropertyModel(QStandardItemModel):
         self.groups = {}
         self.parent_item = self.invisibleRootItem()
 
+    @log_call(log)
     def add_property(self, group, property_key, value_type, default_value = None):
         # Create group if doesn't yet exist
         if group not in self.groups:
