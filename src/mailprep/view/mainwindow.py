@@ -2,10 +2,10 @@
 import logging
 from PySide2.QtCore import Qt, Slot, QSettings
 from PySide2.QtWidgets import QMainWindow, QFileDialog, QApplication
-from PySide2.QtGui import QStandardItemModel, QStandardItem
 from mailprep.ui.mainwindow_ui import Ui_MainWindow_MailPrep  # pylint: disable=no-name-in-module,import-error
 from mailprep.view.new_job_dialog import NewJobDialog
 from mailprep.model.property_model import PropertyModel
+from mailprep.model.qt_edit_types import QtEditTypes
 from mailprep.controller.logging_decorators import log_call
 
 
@@ -58,12 +58,13 @@ class MainWindow(QMainWindow):
         # pylint: enable = no-member, fixme
 
         job_properties = PropertyModel()
-        job_properties.add_property('Customer Information', 'Customer', None)
-        job_properties.add_property('Customer Information', 'Department', None)
-        job_properties.add_property('Merge Settings', 'Use Custom Campus', None)
-        job_properties.add_property('Merge Settings', 'Custom Campus Path', None)
-        self.ui.treeView_jobProperties.setModel(job_properties)
-        self.ui.treeView_jobProperties.initialize()
+        job_properties.add_property('Customer Information', 'Customer', QtEditTypes.Str)
+        job_properties.add_property('Customer Information', 'Department', QtEditTypes.Str)
+        job_properties.add_property('Merge Settings', 'Use Custom Campus', QtEditTypes.Bool)
+        job_properties.add_property('Merge Settings', 'Custom Campus Path', QtEditTypes.Str)
+        self.ui.treeView_jobProperties.set_model(job_properties)
+        # First time we initialize the property editor we should expand all items
+        self.ui.treeView_jobProperties.expandAll()
         self.ui.treeView_jobProperties.setColumnWidth(0, 200)
 
 

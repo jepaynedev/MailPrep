@@ -1,32 +1,15 @@
+"""QStandardItemModel implementation for use with PropertyView defining expected model settings"""
 import logging
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QStandardItemModel, QStandardItem
-from PySide2.QtWidgets import QStyledItemDelegate, QComboBox
-from mailprep.controller.logging_decorators import log_call
+from mailprep.model.qt_user_roles import QtUserRole
 
 
 log = logging.getLogger(__name__)
 
 
-class PropertyEditorDelegate(QStyledItemDelegate):
-
-    def __init__(self, model, parent=None):
-        super(PropertyEditorDelegate, self).__init__(parent)
-        self.parent = parent
-        self.model = model
-
-    def createEditor(self, parent, option, index):
-        if self.itemlist is None:
-            self.itemlist = self.model.getItemList(index)
-
-        editor = QComboBox(parent)
-        editor.addItems(self.itemlist)
-        editor.setCurrentIndex(0)
-        editor.installEventFilter(self)
-        return editor
-
-
 class PropertyModel(QStandardItemModel):
+    """QStandardItemModel implementation for use with PropertyView"""
 
     def __init__(self):
         super(PropertyModel, self).__init__()
@@ -34,8 +17,8 @@ class PropertyModel(QStandardItemModel):
         self.groups = {}
         self.parent_item = self.invisibleRootItem()
 
-    @log_call(log)
-    def add_property(self, group, property_key, value_type, default_value = None):
+    def add_property(self, group, property_key, edit_type, default_value=None):
+        """Adds a property of a given type to a group (create if not exist) with optional value"""
         # Create group if doesn't yet exist
         if group not in self.groups:
             group_item = QStandardItem(group)
@@ -47,6 +30,8 @@ class PropertyModel(QStandardItemModel):
         key_item = QStandardItem(property_key)
         key_item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
         value_item = QStandardItem(default_value)
+        # Set editor type for delegate to select the appropriate editor
+        value_item.setData(edit_type, QtUserRole.EditTypeRole)
 
         # Add property items to the group
         self.groups[group].appendRow([key_item, value_item])

@@ -1,7 +1,9 @@
+"""Useful decorators for facilitating logging"""
 import functools
 
 
 def log_call(log):
+    """Decorates a function and debug logs a call with arguments representations"""
     def internal_log_call(func):
         @functools.wraps(func)
         def wrapper_log_call(*args, **kwargs):

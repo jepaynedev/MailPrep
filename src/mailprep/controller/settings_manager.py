@@ -9,7 +9,7 @@ class SettingsManager:
     """Common overidable application settings managed with a QSettings instance"""
 
     @staticmethod
-    def set_application_values(application, organization, domain = None):
+    def set_application_values(application, organization, domain=None):
         """Set application level values to the QApplication and QSettings static managers"""
         QApplication.setApplicationName(application)
         QApplication.setOrganizationName(organization)
@@ -17,12 +17,12 @@ class SettingsManager:
         if domain is not None:
             QApplication.setOrganizationDomain(domain)
 
-    def __init__(self, application, organization, domain = None):
+    def __init__(self):
         self.settings = QSettings()
 
     @property
-    def default_job_path():
-        # "MailPrep" directory under the users Documents directory on Windows
+    def default_job_path(self):
+        """'MailPrep' directory under the users Documents directory on Windows"""
         return self.settings.value(
             'paths/defaultJobPath',
             os.path.normpath(os.path.expanduser('~/Documents/MailPrep'))
