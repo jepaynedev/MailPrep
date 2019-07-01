@@ -10,7 +10,7 @@ class JobFileSystemModel(QFileSystemModel):
     """File system model to control File List view"""
 
     def __init__(self):
-        super(JobFileSystemModel, self).__init__()
+        super().__init__()
         self.current_root = None
         self.root_path_index = None
 
@@ -26,6 +26,6 @@ class MainWindowController(QObject):
     """General controller for the main view"""
 
     def __init__(self):
-        super(MainWindowController, self).__init__()
+        super().__init__()
         self.file_system_model = JobFileSystemModel()
         self.settings = QSettings()

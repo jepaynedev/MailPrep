@@ -16,7 +16,7 @@ class MainWindow(QMainWindow):
     """Main window view for the application"""
 
     def __init__(self, controller):
-        super(MainWindow, self).__init__()
+        super().__init__()
         self.ctrl = controller
         # Has to be called ASAP to save and restore application state
         self.state_settings = QSettings(
@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
         """Overload for event handler on main window closing (i.e. application closing)"""
         self.state_settings.setValue('ApplicationState/geometry', self.saveGeometry())
         self.state_settings.setValue('ApplicationState/windowState', self.saveState())
-        super(MainWindow, self).closeEvent(event)
+        super().closeEvent(event)
 
     def restore_geometry(self):
         """Restores saved geometry state if it was saved"""

@@ -10,7 +10,7 @@ class NewJobDialog(QDialog):
     """Dialog with input for new job creation"""
 
     def __init__(self):
-        super(NewJobDialog, self).__init__()
+        super().__init__()
         log.debug('NewJobDialog.__init__()')
 
         self.ui = Ui_NewJobDialog()

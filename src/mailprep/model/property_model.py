@@ -12,7 +12,7 @@ class PropertyModel(QStandardItemModel):
     """QStandardItemModel implementation for use with PropertyView"""
 
     def __init__(self):
-        super(PropertyModel, self).__init__()
+        super().__init__()
         self.setHorizontalHeaderLabels(['Property', 'Value'])
         self.groups = {}
         self.parent_item = self.invisibleRootItem()

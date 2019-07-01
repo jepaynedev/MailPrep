@@ -16,7 +16,7 @@ class PropertyEditorDelegate(QStyledItemDelegate):
     """Delegate managing different editor widgets based on items QtUserRole.EditTypeRole value"""
 
     def __init__(self, parent):
-        super(PropertyEditorDelegate, self).__init__(parent)
+        super().__init__(parent)
         self.parent = parent
 
     def paint(self, painter, option, index):
@@ -27,7 +27,7 @@ class PropertyEditorDelegate(QStyledItemDelegate):
         # are visible under the persistent editor checkboxes being used
         if edit_type == QtEditTypes.Bool:
             return
-        super(PropertyEditorDelegate, self).paint(painter, option, index)
+        super().paint(painter, option, index)
 
     def createEditor(self, parent, option, index):
         """Overrides base createEditor method to specify editor from QtUserRole.EditTypeRole"""
@@ -35,14 +35,14 @@ class PropertyEditorDelegate(QStyledItemDelegate):
         edit_type = item.data(QtUserRole.EditTypeRole)
         if edit_type == QtEditTypes.Bool:
             return QCheckBox(parent)
-        return super(PropertyEditorDelegate, self).createEditor(parent, option, index)
+        return super().createEditor(parent, option, index)
 
 
 class PropertyEditor(QTreeView):
     """QTreeView subclass with style and editor modifications for generalized and grouped editors"""
 
     def __init__(self, parent):
-        super(PropertyEditor, self).__init__(parent)
+        super().__init__(parent)
         property_editor_delegate = PropertyEditorDelegate(self)
         self.setItemDelegateForColumn(EDIT_COLUMN_INDEX, property_editor_delegate)
         self.setEditTriggers(QTreeView.AllEditTriggers)

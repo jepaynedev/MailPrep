@@ -11,7 +11,7 @@ class FileInput(QWidget):
     """File input widget view for data entry for a single file"""
 
     def __init__(self, file_path):
-        super(FileInput, self).__init__()
+        super().__init__()
         log.debug('FileInput.__init__(%s)', file_path)
 
         self.file_path = file_path
