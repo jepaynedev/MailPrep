@@ -30,16 +30,16 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow_MailPrep()
         self.ui.setupUi(self)
 
+        # Attach actions to the menu that have to be done in code as the designer doesn't seem to
+        # be able to set actions created from widget methods
+        self.ui.menuView.addAction(self.ui.dockWidget_outputWindow.toggleViewAction())
+        self.ui.menuView.addAction(self.ui.dockWidget_errorWindow.toggleViewAction())
+
         # Set default window state
         if not self.restore_geometry():
             self.setWindowState(Qt.WindowMaximized)
         if not self.restore_state():
-            self.ui.dockWidget_output.setVisible(False)
-            self.splitDockWidget(
-                self.ui.dockWidget__fileList,
-                self.ui.dockWidget_jobProperties,
-                Qt.Vertical
-            )
+            self.set_to_default_state()
         self.ui.treeView_fileList.setModel(self.ctrl.file_system_model)
 
         self.new_job_dialog = NewJobDialog()
@@ -67,6 +67,19 @@ class MainWindow(QMainWindow):
         self.ui.treeView_jobProperties.expandAll()
         self.ui.treeView_jobProperties.setColumnWidth(0, 200)
 
+    def set_to_default_state(self):
+        """Sets default locations for widgets for when existing state is not restored"""
+        self.tabifyDockWidget(
+            self.ui.dockWidget_outputWindow,
+            self.ui.dockWidget_errorWindow
+        )
+        self.ui.dockWidget_outputWindow.setVisible(False)
+        self.ui.dockWidget_errorWindow.setVisible(False)
+        self.splitDockWidget(
+            self.ui.dockWidget__fileList,
+            self.ui.dockWidget_jobProperties,
+            Qt.Vertical
+        )
 
     @Slot()
     def set_file_list_view(self, path):
