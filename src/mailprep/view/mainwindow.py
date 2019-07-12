@@ -15,9 +15,15 @@ log = logging.getLogger(__name__)
 class MainWindow(QMainWindow):
     """Main window view for the application"""
 
-    def __init__(self, controller):
+    def __init__(self):
         super().__init__()
-        self.ctrl = controller
+        self.file_input_widgets = None
+        self.new_job_dialog = None
+        self.state_settings = None
+        self.ui = None
+
+    def initialize(self):
+        """Initialize in manual call so we can set up other application settings before the view"""
         # Has to be called ASAP to save and restore application state
         self.state_settings = QSettings(
             QSettings.NativeFormat,
@@ -33,14 +39,13 @@ class MainWindow(QMainWindow):
         # Attach actions to the menu that have to be done in code as the designer doesn't seem to
         # be able to set actions created from widget methods
         self.ui.menuView.addAction(self.ui.dockWidget_outputWindow.toggleViewAction())
-        self.ui.menuView.addAction(self.ui.dockWidget_errorWindow.toggleViewAction())
 
         # Set default window state
         if not self.restore_geometry():
             self.setWindowState(Qt.WindowMaximized)
         if not self.restore_state():
             self.set_to_default_state()
-        self.ui.treeView_fileList.setModel(self.ctrl.file_system_model)
+        # self.ui.treeView_fileList.setModel(self.ctrl.file_system_model)
 
         self.new_job_dialog = NewJobDialog()
 
@@ -48,14 +53,12 @@ class MainWindow(QMainWindow):
         self.file_input_widgets = []
 
         # Register signals
-        # pylint: disable = no-member, fixme
-        # TODO: Remove no-member lint suppression when fixed for PySide2 Signal connect methods
-        # TODO: See https://github.com/PyCQA/pylint/issues/2585
+        # pylint: disable = no-member
         self.ui.actionNewJob.triggered.connect(self.on_new_job)
         self.ui.actionBrowseCustomCampus.triggered.connect(QFileDialog.getOpenFileName)
         self.ui.actionOpenJob.triggered.connect(self.on_open_job)
         self.ui.actionAddFiles.triggered.connect(self.on_add_files)
-        # pylint: enable = no-member, fixme
+        # pylint: enable = no-member
 
         job_properties = PropertyModel()
         job_properties.add_property('Customer Information', 'Customer', QtEditTypes.Str)
@@ -67,29 +70,30 @@ class MainWindow(QMainWindow):
         self.ui.treeView_jobProperties.expandAll()
         self.ui.treeView_jobProperties.setColumnWidth(0, 200)
 
+    def set_output_signal(self, output_signal):
+        """Connects the given signal with a string argument to the output window text display"""
+        output_signal.connect(self.ui.plainTextEdit_output.appendPlainText)
+        log.debug('Output window properly connected -- Visibility Test')
+
     def set_to_default_state(self):
         """Sets default locations for widgets for when existing state is not restored"""
-        self.tabifyDockWidget(
-            self.ui.dockWidget_outputWindow,
-            self.ui.dockWidget_errorWindow
-        )
         self.ui.dockWidget_outputWindow.setVisible(False)
-        self.ui.dockWidget_errorWindow.setVisible(False)
         self.splitDockWidget(
             self.ui.dockWidget__fileList,
             self.ui.dockWidget_jobProperties,
             Qt.Vertical
         )
 
-    @Slot()
-    def set_file_list_view(self, path):
-        """Sets a given path for the file list tree view"""
-        self.ctrl.file_system_model.set_current_root(path)
-        self.ui.treeView_fileList.setRootIndex(self.ctrl.file_system_model.root_path_index)
-        for i in range(1, self.ctrl.file_system_model.columnCount()):
-            self.ui.treeView_fileList.hideColumn(i)
+    # @Slot()
+    # def set_file_list_view(self, path):
+    #     """Sets a given path for the file list tree view"""
+    #     self.ctrl.file_system_model.set_current_root(path)
+    #     self.ui.treeView_fileList.setRootIndex(self.ctrl.file_system_model.root_path_index)
+    #     for i in range(1, self.ctrl.file_system_model.columnCount()):
+    #         self.ui.treeView_fileList.hideColumn(i)
 
     @Slot()
+    @log_call(log)
     def on_new_job(self):
         """Trigger on new job action to prompt for new job data"""
         self.new_job_dialog.show()
