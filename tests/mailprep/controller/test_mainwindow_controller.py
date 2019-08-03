@@ -1,6 +1,6 @@
 import unittest
 
-from mailprep.controller.mainwindow_controller import MainWindowController
+from mailprep.controller.mainwindow_controller import MainWindowController, JobFileSystemModel
 
 
 # QSignalSpy does not appear to yet be ported to PySide2,
@@ -16,3 +16,21 @@ class SignalCheck:
 
 class TestMainWindowController(unittest.TestCase):
     pass
+
+
+class TestJobFileSystemModel(unittest.TestCase):
+
+    def test_hide_column_indexes(self):
+        file_system_model = JobFileSystemModel()
+        actual = file_system_model.hide_column_indexes()
+        assert [1, 2, 3] == actual
+
+    def test_edit_column_indexes(self):
+        file_system_model = JobFileSystemModel()
+        actual = file_system_model.edit_column_indexes()
+        assert [4, 5] == actual
+
+    def test_columnCount(self):
+        file_system_model = JobFileSystemModel()
+        actual = file_system_model.columnCount()
+        assert 6 == actual

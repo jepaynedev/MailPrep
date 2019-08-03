@@ -8,6 +8,12 @@ from mailprep.model.qt_user_roles import QtUserRole
 log = logging.getLogger(__name__)
 
 
+class StandardItem(QStandardItem):
+
+    def __repr__(self):
+        return f"<StandardItem({self.data(Qt.DisplayRole)})>"
+
+
 class PropertyModel(QStandardItemModel):
     """QStandardItemModel implementation for use with PropertyView"""
 
@@ -21,15 +27,15 @@ class PropertyModel(QStandardItemModel):
         """Adds a property of a given type to a group (create if not exist) with optional value"""
         # Create group if doesn't yet exist
         if group not in self.groups:
-            group_item = QStandardItem(group)
+            group_item = StandardItem(group)
             group_item.setFlags(Qt.ItemIsEnabled)
             self.parent_item.appendRow(group_item)
             self.groups[group] = group_item
 
         # Create property row items
-        key_item = QStandardItem(property_key)
+        key_item = StandardItem(property_key)
         key_item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-        value_item = QStandardItem(default_value)
+        value_item = StandardItem(default_value)
         # Set editor type for delegate to select the appropriate editor
         value_item.setData(edit_type, QtUserRole.EditTypeRole)
 

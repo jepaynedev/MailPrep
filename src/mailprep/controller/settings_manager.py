@@ -24,10 +24,10 @@ class SettingsManager:
     def default_job_path(self):
         """'MailPrep' directory under the users Documents directory on Windows"""
         return self.settings.value(
-            'paths/defaultJobPath',
+            'Paths/DefaultJobPath',
             os.path.normpath(os.path.expanduser('~/Documents/MailPrep'))
         )
 
     @default_job_path.setter
     def default_job_path(self, value):
-        self.settings.setValue('paths/defaultJobPath', value)
+        self.settings.setValue('Paths/DefaultJobPath', value)

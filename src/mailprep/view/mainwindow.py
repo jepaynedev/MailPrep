@@ -1,10 +1,10 @@
 """Main window view with view-specific logic"""
 import logging
-from PySide2.QtCore import Qt, Slot, QSettings
+from PySide2.QtCore import Qt, Signal, Slot, QSettings
 from PySide2.QtWidgets import QMainWindow, QFileDialog, QApplication
+from PySide2.QtGui import QTextCursor
 from mailprep.ui.mainwindow_ui import Ui_MainWindow_MailPrep  # pylint: disable=no-name-in-module,import-error
 from mailprep.view.new_job_dialog import NewJobDialog
-from mailprep.model.property_model import PropertyModel
 from mailprep.model.qt_edit_types import QtEditTypes
 from mailprep.controller.logging_decorators import log_call
 
@@ -15,14 +15,17 @@ log = logging.getLogger(__name__)
 class MainWindow(QMainWindow):
     """Main window view for the application"""
 
+    open_job = Signal(str)
+
     def __init__(self):
         super().__init__()
         self.file_input_widgets = None
         self.new_job_dialog = None
         self.state_settings = None
         self.ui = None
+        self.app_settings = None
 
-    def initialize(self):
+    def initialize(self, app_settings):
         """Initialize in manual call so we can set up other application settings before the view"""
         # Has to be called ASAP to save and restore application state
         self.state_settings = QSettings(
@@ -35,6 +38,8 @@ class MainWindow(QMainWindow):
         log.debug('Loading MainWindow')
         self.ui = Ui_MainWindow_MailPrep()
         self.ui.setupUi(self)
+
+        self.app_settings = app_settings
 
         # Attach actions to the menu that have to be done in code as the designer doesn't seem to
         # be able to set actions created from widget methods
@@ -56,24 +61,21 @@ class MainWindow(QMainWindow):
         # pylint: disable = no-member
         self.ui.actionNewJob.triggered.connect(self.on_new_job)
         self.ui.actionBrowseCustomCampus.triggered.connect(QFileDialog.getOpenFileName)
-        self.ui.actionOpenJob.triggered.connect(self.on_open_job)
+        self.ui.actionOpenJob.triggered.connect(self.job_open_file_picker)
         self.ui.actionAddFiles.triggered.connect(self.on_add_files)
         # pylint: enable = no-member
 
-        job_properties = PropertyModel()
-        job_properties.add_property('Customer Information', 'Customer', QtEditTypes.Str)
-        job_properties.add_property('Customer Information', 'Department', QtEditTypes.Str)
-        job_properties.add_property('Merge Settings', 'Use Custom Campus', QtEditTypes.Bool)
-        job_properties.add_property('Merge Settings', 'Custom Campus Path', QtEditTypes.Str)
-        self.ui.treeView_jobProperties.set_model(job_properties)
-        # First time we initialize the property editor we should expand all items
-        self.ui.treeView_jobProperties.expandAll()
-        self.ui.treeView_jobProperties.setColumnWidth(0, 200)
-
     def set_output_signal(self, output_signal):
         """Connects the given signal with a string argument to the output window text display"""
-        output_signal.connect(self.ui.plainTextEdit_output.appendPlainText)
+        output_signal.connect(self.append_text_to_output_windows)
         log.debug('Output window properly connected -- Visibility Test')
+
+    @Slot()
+    def append_text_to_output_windows(self, text):
+        self.ui.plainTextEdit_output.moveCursor(QTextCursor.End)
+        self.ui.plainTextEdit_output.insertPlainText(text)
+        self.ui.plainTextEdit_output.moveCursor(QTextCursor.End)
+
 
     def set_to_default_state(self):
         """Sets default locations for widgets for when existing state is not restored"""
@@ -84,19 +86,30 @@ class MainWindow(QMainWindow):
             Qt.Vertical
         )
 
-    # @Slot()
-    # def set_file_list_view(self, path):
-    #     """Sets a given path for the file list tree view"""
-    #     self.ctrl.file_system_model.set_current_root(path)
-    #     self.ui.treeView_fileList.setRootIndex(self.ctrl.file_system_model.root_path_index)
-    #     for i in range(1, self.ctrl.file_system_model.columnCount()):
-    #         self.ui.treeView_fileList.hideColumn(i)
+    def set_job_properties_model(self, property_model):
+        self.ui.treeView_jobProperties.set_model(property_model)
+
+        # First time we initialize the property editor for a job we should expand all items
+        self.ui.treeView_jobProperties.expandAll()
+        self.ui.treeView_jobProperties.setColumnWidth(0, 200)
+
+    def set_job_files_model(self, files_model):
+        self.ui.treeView_fileList.set_model(files_model)
 
     @Slot()
     @log_call(log)
     def on_new_job(self):
         """Trigger on new job action to prompt for new job data"""
         self.new_job_dialog.show()
+
+    @Slot()
+    def job_open_file_picker(self):
+        """Triggers on request to open a job to display a file picker"""
+        dft_open_dir = self.app_settings.default_job_path
+        (open_path, _) = QFileDialog.getOpenFileName(
+            self, 'Open', dft_open_dir, 'MailPrep Job Definition (*.mpjob)')
+        if open_path:
+            self.open_job.emit(open_path)
 
     @Slot()
     def on_open_job(self):

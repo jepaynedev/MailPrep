@@ -15,7 +15,7 @@ class QueueStream:
 
     def write(self, value):
         """Puts the given text written to the stream-like object to the underlying queue"""
-        self.std_queue.put(value.strip())
+        self.std_queue.put(value)
 
     def flush(self):
         """Flushes the stream-like object which should push to write"""
