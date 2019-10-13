@@ -46,3 +46,6 @@ venv/
 
 # Mypy cache
 .mypy_cache/
+
+# Editor specific
+.vscode/
