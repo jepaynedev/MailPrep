@@ -16,6 +16,7 @@ dev_extras = [
     'pytest',
     'tox',
     'tox-venv',
+    'pylint',
 ]
 
 
