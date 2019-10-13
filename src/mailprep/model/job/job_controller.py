@@ -4,7 +4,7 @@ from collections import namedtuple
 from PySide2.QtCore import Qt, QObject, Slot, Signal
 from mailprep.model.qt_edit_types import QtEditTypes
 from mailprep.model.property_model import PropertyModel
-from mailprep.controller.logging_decorators import log_call
+from utils.logging_decorators import log_call
 
 
 log = logging.getLogger(__name__)

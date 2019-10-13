@@ -10,7 +10,7 @@ from mailprep.model.job.job_controller import JobManager
 from mailprep.model.property_model import PropertyModel
 from mailprep.model.qt_edit_types import QtEditTypes
 from mailprep.model.settings.job_settings import JobSettings
-from mailprep.controller.logging_decorators import log_call
+from utils.logging_decorators import log_call
 
 
 log = logging.getLogger(__name__)
