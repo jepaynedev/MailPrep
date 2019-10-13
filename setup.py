@@ -7,8 +7,7 @@ import setuptools
 import setuptools.command.install
 
 requires = [
-    'PySide2',
-    'pyyaml',
+    'PySide2'
 ]
 
 

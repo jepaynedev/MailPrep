@@ -7,3 +7,8 @@ class TestModuleImport(unittest.TestCase):
         """Simply tries to import mailprep module then assert True. If import fails then exception will be thrown and test will fail."""
         import mailprep
         self.assertTrue(True)
+
+    def test_import_utils(self):
+        """Simply tries to import utils module then assert True. If import fails then exception will be thrown and test will fail."""
+        import utils
+        self.assertTrue(True)
