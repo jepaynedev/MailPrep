@@ -21,8 +21,7 @@ class PropertyEditorDelegate(QStyledItemDelegate):
 
     def paint(self, painter, option, index):
         """Overrides base paint method to hide display if boolean value"""
-        item = self.parent.model().itemFromIndex(index)
-        edit_type = item.data(QtUserRole.EditTypeRole)
+        edit_type = self.parent.model().data(index, QtUserRole.EditTypeRole)
         # Don't paint display for boolean values as "True" or "False" strings
         # are visible under the persistent editor checkboxes being used
         if edit_type == QtEditTypes.Bool:
@@ -31,8 +30,7 @@ class PropertyEditorDelegate(QStyledItemDelegate):
 
     def createEditor(self, parent, option, index):
         """Overrides base createEditor method to specify editor from QtUserRole.EditTypeRole"""
-        item = self.parent.model().itemFromIndex(index)
-        edit_type = item.data(QtUserRole.EditTypeRole)
+        edit_type = self.parent.model().data(index, QtUserRole.EditTypeRole)
         if edit_type == QtEditTypes.Bool:
             return QCheckBox(parent)
         return super().createEditor(parent, option, index)
