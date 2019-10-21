@@ -3,26 +3,62 @@ import re
 import collections
 import configparser
 
-
-DEFAULT_SECTION_NAME = 'FieldMap'
-
-
-def create_config_mapping_from_headers(headers, config_section=DEFAULT_SECTION_NAME):
-    """Given a list of file headers, create a ConfigParser instance with mapped fields"""
-    mapping_dict = create_map_dict(headers)
-    return create_config_object(mapping_dict, config_section)
+from utils.common import coalesce, pad_right
 
 
-def create_config_object(mapping_dict, header=DEFAULT_SECTION_NAME):
-    """Writes mapping to a ConfigParser instance (with values aligned)"""
-    config = configparser.ConfigParser()
-    max_key_len = len(max(mapping_dict.keys(), key=len))
-    config[header] = {pad_right(k, max_key_len): v for k, v in mapping_dict.items()}
-    return config
+class ConfigMergeMapping:
+    """Manages merge field mappings"""
 
+    def __init__(self, file_mappings=None):
+        self.set_all_mappings(coalesce(file_mappings, collections.OrderedDict()))
 
-def pad_right(value, pad_length):
-    return f'{value: <{pad_length}}'
+    @classmethod
+    def from_stream(cls, stream):
+        """Create new instance from a steam object parsed as a ConfigParser"""
+        config = configparser.ConfigParser()
+        config.read_file(stream)
+        fie_mapping = collections.OrderedDict([
+            (section, collections.OrderedDict(config.items(section)))
+            for section in config.sections()
+        ])
+        return cls(fie_mapping)
+
+    def get_files(self):
+        """Returns all files with mappings (i.e. top level section headers)"""
+        return self.file_mappings.keys()
+
+    def get_mappings(self, file_name):
+        """Gets all field mappings for the specified file"""
+        return self.file_mappings[file_name]
+
+    def get_mapping(self, file_name, field_name):
+        """Gets a mappings given the file name and field name"""
+        return self.get_mappings(file_name)[field_name]
+
+    def set_file_mappings(self, file_name, mappings):
+        """Sets the given file mappings to a mappings OrderedDict"""
+        self.file_mappings[file_name] = mappings
+
+    def set_all_mappings(self, full_mapping):
+        """Sets all mappings to the given two level OrderedDict"""
+        self.file_mappings = full_mapping
+
+    def write_to_stream(self, stream):
+        """Writes all mappings to a stream in a pretty formmatted format"""
+        # Get max field length for all keys in all files (to line of equals sign in entire file)
+        all_fields = [
+            key
+            for file_name in self.get_files()
+            for key in self.get_mappings(file_name).keys()
+        ]
+        max_field_length = len(max(all_fields, key=len))
+        config = configparser.ConfigParser()
+        for file_name in self.get_files():
+            config.add_section(file_name)
+            for option, value in self.get_mappings(file_name).items():
+                config.set(file_name, pad_right(option, max_field_length), value)
+        config.write(stream)
+
 
 class FieldMapper:
     """Matches specified headers and formats into a string defining the mapping"""

@@ -1,12 +1,13 @@
 import io
 import unittest
 
-from mailprep.merge import create_map_dict, FieldMapper, _wrap_in_braces, pad_right, create_config_object, create_config_mapping_from_headers
+from mailprep.merge import create_map_dict, FieldMapper, _wrap_in_braces, ConfigMergeMapping
 
-class TestConfigObject(unittest.TestCase):
+class TestConfigMergeMapping(unittest.TestCase):
 
-    def test_create_config_mapping_from_headers(self):
-        headers = [
+    def test_multiple_files(self):
+        file1_name = 'filename.xlsx'
+        file1_headers = [
             'index',
             'mr',
             'ID1',
@@ -24,12 +25,24 @@ class TestConfigObject(unittest.TestCase):
             'Zip',
             'list_id',
         ]
-        config = create_config_mapping_from_headers(headers)
+        file2_name = 'second.xlsx'
+        file2_headers = [
+            'id',
+            'name_line',
+            'title',
+            'address',
+            'last_line',
+        ]
+
+        mapping = ConfigMergeMapping()
+        mapping.set_file_mappings(file1_name, create_map_dict(file1_headers))
+        mapping.set_file_mappings(file2_name, create_map_dict(file2_headers))
         f = io.StringIO()
-        config.write(f)
+        mapping.write_to_stream(f)
         actual = f.getvalue()
+
         expected = (
-            '[FieldMap]\n'
+            '[filename.xlsx]\n'
             'id       = {ID1}:{ID2}\n'
             'first    = {name1}, {name9}\n'
             'title    = {Title}, {title2}\n'
@@ -38,37 +51,122 @@ class TestConfigObject(unittest.TestCase):
             'address2 = {Line2}\n'
             'city     = {City} {State} {Zip}\n'
             'salline  = {mr}\n'
-            'list_id  = {list_id}\n\n'
+            'list_id  = {list_id}\n'
+            '\n'
+            '[second.xlsx]\n'
+            'id = {id}\n'
+            'first = {name_line}\n'
+            'title = {title}\n'
+            'address = {address}\n'
+            'city = {last_line}\n'
+            '\n'
         )
-        self.assertEqual(expected, actual)
 
+    def test_write_read_write_reversible(self):
+        file1_name = 'filename.xlsx'
+        file1_headers = [
+            'index',
+            'mr',
+            'ID1',
+            'ID2',
+            'name1',
+            'name9',
+            'Title',
+            'title2',
+            'Firm',
+            'company',
+            'Line1',
+            'Line2',
+            'City',
+            'State',
+            'Zip',
+            'list_id',
+        ]
+        file2_name = 'second.xlsx'
+        file2_headers = [
+            'id',
+            'name_line',
+            'title',
+            'address',
+            'last_line',
+        ]
 
-
-    def test_create_config_object(self):
-        source = {
-            'test': 'something',
-            'another': 'value'
-        }
+        mapping = ConfigMergeMapping()
+        mapping.set_file_mappings(file1_name, create_map_dict(file1_headers))
+        mapping.set_file_mappings(file2_name, create_map_dict(file2_headers))
         f = io.StringIO()
-        config = create_config_object(source)
-        config.write(f)
+        mapping.write_to_stream(f)
+
+        # Read and write again to test revisiblity and idempotency
+        f.seek(0)
+        mapping2 = ConfigMergeMapping.from_stream(f)
+        f2 = io.StringIO()
+        mapping2.write_to_stream(f2)
+        actual = f2.getvalue()
+
+        expected = (
+            '[filename.xlsx]\n'
+            'id       = {ID1}:{ID2}\n'
+            'first    = {name1}, {name9}\n'
+            'title    = {Title}, {title2}\n'
+            'company  = {Firm}, {company}\n'
+            'address  = {Line1}\n'
+            'address2 = {Line2}\n'
+            'city     = {City} {State} {Zip}\n'
+            'salline  = {mr}\n'
+            'list_id  = {list_id}\n'
+            '\n'
+            '[second.xlsx]\n'
+            'id = {id}\n'
+            'first = {name_line}\n'
+            'title = {title}\n'
+            'address = {address}\n'
+            'city = {last_line}\n'
+            '\n'
+        )
+
+
+
+
+    def test_create_from_file_name_and_headers(self):
+        file_name = 'filename.xlsx'
+        file_headers = [
+            'index',
+            'mr',
+            'ID1',
+            'ID2',
+            'name1',
+            'name9',
+            'Title',
+            'title2',
+            'Firm',
+            'company',
+            'Line1',
+            'Line2',
+            'City',
+            'State',
+            'Zip',
+            'list_id',
+        ]
+        mapping = ConfigMergeMapping()
+        mapping.set_file_mappings(file_name, create_map_dict(file_headers))
+        f = io.StringIO()
+        mapping.write_to_stream(f)
         actual = f.getvalue()
         expected = (
-            '[FieldMap]\n'
-            'test    = something\n'
-            'another = value\n\n'
+            '[filename.xlsx]\n'
+            'id       = {ID1}:{ID2}\n'
+            'first    = {name1}, {name9}\n'
+            'title    = {Title}, {title2}\n'
+            'company  = {Firm}, {company}\n'
+            'address  = {Line1}\n'
+            'address2 = {Line2}\n'
+            'city     = {City} {State} {Zip}\n'
+            'salline  = {mr}\n'
+            'list_id  = {list_id}\n'
+            '\n'
         )
         self.assertEqual(expected, actual)
-
-class TestPadRight(unittest.TestCase):
-
-    def test_pad_right(self):
-        actual = pad_right('a', 3)
-        self.assertEqual('a  ', actual)
-
-    def test_pad_too_long(self):
-        actual = pad_right('abc', 2)
-        self.assertEqual('abc', actual)
 
 
 class TestFieldMapper(unittest.TestCase):
