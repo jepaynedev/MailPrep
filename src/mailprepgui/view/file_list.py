@@ -1,7 +1,7 @@
 import logging
 from PySide2.QtWidgets import QTreeView, QStyledItemDelegate, QComboBox
-from mailprep.model.qt_edit_types import QtEditTypes
-from mailprep.model.qt_user_roles import QtUserRole
+from mailprepgui.model.qt_edit_types import QtEditTypes
+from mailprepgui.model.qt_user_roles import QtUserRole
 from utils.logging_decorators import log_call
 
 

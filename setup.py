@@ -22,7 +22,7 @@ dev_extras = [
 class Pyside2UICRunnerOnInstall(setuptools.command.install.install):
     def run(self):
         from pyside2_uic_runner import run_pyside2_uic
-        run_pyside2_uic('ui/', 'src/mailprep/ui/')
+        run_pyside2_uic('ui/', 'src/mailprepgui/ui/')
         setuptools.command.install.install.run(self)
 
 setuptools.setup(
@@ -61,7 +61,7 @@ setuptools.setup(
     },
     entry_points={
         'console_scripts': [
-            'mailprep = mailprep:main',
+            'mailprep = mailprepgui:main',
         ],
     },
 )

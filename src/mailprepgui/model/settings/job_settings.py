@@ -1,7 +1,7 @@
 """Defines format for YAML based MailPrep job definition file (.mpjob)"""
 import json
 
-from mailprep.model.qt_edit_types import QtEditTypes
+from mailprepgui.model.qt_edit_types import QtEditTypes
 from utils.mapping import CaseInsensitiveDict, recursive_merge
 
 PROPERTIES_KEY = 'properties'

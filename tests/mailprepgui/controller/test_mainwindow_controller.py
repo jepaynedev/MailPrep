@@ -1,6 +1,6 @@
 import unittest
 
-from mailprep.controller.mainwindow_controller import MainWindowController, JobFileSystemModel
+from mailprepgui.controller.mainwindow_controller import MainWindowController, JobFileSystemModel
 
 
 # QSignalSpy does not appear to yet be ported to PySide2,

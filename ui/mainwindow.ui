@@ -57,7 +57,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_MailPrep">
@@ -321,12 +321,12 @@
   <customwidget>
    <class>PropertyEditor</class>
    <extends>QTreeView</extends>
-   <header>mailprep/view/property_editor.h</header>
+   <header>mailprepgui/view/property_editor.h</header>
   </customwidget>
   <customwidget>
    <class>FileList</class>
    <extends>QTreeView</extends>
-   <header>mailprep/view/file_list.h</header>
+   <header>mailprepgui/view/file_list.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

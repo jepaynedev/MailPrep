@@ -3,13 +3,13 @@ import logging
 import os
 from PySide2.QtCore import Qt, QObject, Signal, Slot, QModelIndex
 from PySide2.QtWidgets import QFileSystemModel
-from mailprep.controller.std_stream_monitor import QueueMonitorWorker
-from mailprep.controller.thread_wrapper import start_thread
-from mailprep.controller.settings_manager import SettingsManager
-from mailprep.model.job.job_controller import JobManager
-from mailprep.model.property_model import PropertyModel
-from mailprep.model.qt_edit_types import QtEditTypes
-from mailprep.model.settings.job_settings import JobSettings
+from mailprepgui.controller.std_stream_monitor import QueueMonitorWorker
+from mailprepgui.controller.thread_wrapper import start_thread
+from mailprepgui.controller.settings_manager import SettingsManager
+from mailprepgui.model.job.job_controller import JobManager
+from mailprepgui.model.property_model import PropertyModel
+from mailprepgui.model.qt_edit_types import QtEditTypes
+from mailprepgui.model.settings.job_settings import JobSettings
 from utils.logging_decorators import log_call
 
 

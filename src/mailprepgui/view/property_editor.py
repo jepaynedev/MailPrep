@@ -2,8 +2,8 @@
 import logging
 from PySide2.QtGui import QBrush, QColor
 from PySide2.QtWidgets import QTreeView, QCheckBox, QStyledItemDelegate
-from mailprep.model.qt_edit_types import QtEditTypes
-from mailprep.model.qt_user_roles import QtUserRole
+from mailprepgui.model.qt_edit_types import QtEditTypes
+from mailprepgui.model.qt_user_roles import QtUserRole
 
 
 EDIT_COLUMN_INDEX = 1

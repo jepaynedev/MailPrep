@@ -2,7 +2,7 @@
 import logging
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QStandardItemModel, QStandardItem
-from mailprep.model.qt_user_roles import QtUserRole
+from mailprepgui.model.qt_user_roles import QtUserRole
 
 
 log = logging.getLogger(__name__)

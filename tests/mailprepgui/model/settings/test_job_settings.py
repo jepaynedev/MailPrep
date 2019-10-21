@@ -1,7 +1,7 @@
 import unittest
 import io
 
-from mailprep.model.settings.job_settings import JobSettings
+from mailprepgui.model.settings.job_settings import JobSettings
 
 
 class TestJobSettings(unittest.TestCase):

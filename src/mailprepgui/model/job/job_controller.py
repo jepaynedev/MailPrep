@@ -2,8 +2,8 @@ import logging
 import os
 from collections import namedtuple
 from PySide2.QtCore import Qt, QObject, Slot, Signal
-from mailprep.model.qt_edit_types import QtEditTypes
-from mailprep.model.property_model import PropertyModel
+from mailprepgui.model.qt_edit_types import QtEditTypes
+from mailprepgui.model.property_model import PropertyModel
 from utils.logging_decorators import log_call
 
 

@@ -1,7 +1,7 @@
 """Dialog with input for new job creation"""
 import logging
 from PySide2.QtWidgets import QDialog
-from mailprep.ui.new_job_dialog_ui import Ui_NewJobDialog  # pylint: disable=no-name-in-module,import-error
+from mailprepgui.ui.new_job_dialog_ui import Ui_NewJobDialog  # pylint: disable=no-name-in-module,import-error
 
 log = logging.getLogger(__name__)
 

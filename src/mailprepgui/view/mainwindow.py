@@ -3,9 +3,9 @@ import logging
 from PySide2.QtCore import Qt, Signal, Slot, QSettings
 from PySide2.QtWidgets import QMainWindow, QFileDialog, QApplication
 from PySide2.QtGui import QTextCursor
-from mailprep.ui.mainwindow_ui import Ui_MainWindow_MailPrep  # pylint: disable=no-name-in-module,import-error
-from mailprep.view.new_job_dialog import NewJobDialog
-from mailprep.model.qt_edit_types import QtEditTypes
+from mailprepgui.ui.mainwindow_ui import Ui_MainWindow_MailPrep  # pylint: disable=no-name-in-module,import-error
+from mailprepgui.view.new_job_dialog import NewJobDialog
+from mailprepgui.model.qt_edit_types import QtEditTypes
 from utils.logging_decorators import log_call
 
 
