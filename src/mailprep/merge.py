@@ -17,11 +17,11 @@ class ConfigMergeMapping:
         """Create new instance from a steam object parsed as a ConfigParser"""
         config = configparser.ConfigParser()
         config.read_file(stream)
-        fie_mapping = collections.OrderedDict([
+        file_mapping = collections.OrderedDict([
             (section, collections.OrderedDict(config.items(section)))
             for section in config.sections()
         ])
-        return cls(fie_mapping)
+        return cls(file_mapping)
 
     def get_files(self):
         """Returns all files with mappings (i.e. top level section headers)"""
@@ -44,7 +44,7 @@ class ConfigMergeMapping:
         self.file_mappings = full_mapping
 
     def write_to_stream(self, stream):
-        """Writes all mappings to a stream in a pretty formmatted format"""
+        """Writes all mappings to a stream in a pretty formatted format"""
         # Get max field length for all keys in all files (to line of equals sign in entire file)
         all_fields = [
             key
