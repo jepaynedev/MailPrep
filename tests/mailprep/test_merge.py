@@ -5,6 +5,45 @@ from mailprep.merge import create_map_dict, FieldMapper, _wrap_in_braces, Config
 
 class TestConfigMergeMapping(unittest.TestCase):
 
+    def test_from_stream(self):
+        stream_contents = (
+            '[filename.xlsx]\n'
+            'id       = {ID1}:{ID2}\n'
+            'first    = {name1}, {name9}\n'
+            'title    = {Title}, {title2}\n'
+            'company  = {Firm}, {company}\n'
+            'address  = {Line1}\n'
+            'address2 = {Line2}\n'
+            'city     = {City} {State} {Zip}\n'
+            'salline  = {mr}\n'
+            'list_id  = {list_id}\n'
+            '\n'
+            '[second.xlsx]\n'
+            'id       = {id}\n'
+            'first    = {name_line}\n'
+            'title    = {title}\n'
+            'address  = {address}\n'
+            'city     = {last_line}\n'
+            '\n'
+        )
+        input_stream = io.StringIO(stream_contents)
+        mapping = ConfigMergeMapping.from_stream(input_stream)
+
+        # Test all files loaded
+        expected_filenames = ['filename.xlsx', 'second.xlsx']
+        self.assertSequenceEqual(expected_filenames, list(mapping.get_files()))
+
+        # Test mapping
+        expected_map = {
+            'id': '{id}',
+            'first': '{name_line}',
+            'title': '{title}',
+            'address': '{address}',
+            'city': '{last_line}',
+        }
+        actual_map = mapping.get_mappings('second.xlsx')
+        self.assertDictEqual(expected_map, actual_map)
+
     def test_multiple_files(self):
         file1_name = 'filename.xlsx'
         file1_headers = [
@@ -54,13 +93,14 @@ class TestConfigMergeMapping(unittest.TestCase):
             'list_id  = {list_id}\n'
             '\n'
             '[second.xlsx]\n'
-            'id = {id}\n'
-            'first = {name_line}\n'
-            'title = {title}\n'
-            'address = {address}\n'
-            'city = {last_line}\n'
+            'id       = {id}\n'
+            'first    = {name_line}\n'
+            'title    = {title}\n'
+            'address  = {address}\n'
+            'city     = {last_line}\n'
             '\n'
         )
+        self.assertEqual(expected, actual)
 
     def test_write_read_write_reversible(self):
         file1_name = 'filename.xlsx'
@@ -117,16 +157,14 @@ class TestConfigMergeMapping(unittest.TestCase):
             'list_id  = {list_id}\n'
             '\n'
             '[second.xlsx]\n'
-            'id = {id}\n'
-            'first = {name_line}\n'
-            'title = {title}\n'
-            'address = {address}\n'
-            'city = {last_line}\n'
+            'id       = {id}\n'
+            'first    = {name_line}\n'
+            'title    = {title}\n'
+            'address  = {address}\n'
+            'city     = {last_line}\n'
             '\n'
         )
-
-
-
+        self.assertEqual(expected, actual)
 
     def test_create_from_file_name_and_headers(self):
         file_name = 'filename.xlsx'
